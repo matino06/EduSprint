@@ -1,24 +1,48 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import { Box, ThemeProvider, Typography, Container } from '@mui/material';
+
+import { UserProvider, useUser } from './context/UserContext';
+import theme from './styles/theme';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 function App() {
+  const user = useUser();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100vh',
+        }}>
+        <UserProvider>
+          <Navbar />
+          <Container sx={{
+            flex: 1,
+          }}>
+            <UserGreeting />
+          </Container>
+          <Footer />
+        </UserProvider>
+      </Box>
+    </ThemeProvider>
+  );
+}
+
+function UserGreeting() {
+  const user = useUser();
+
+  return (
+    <Typography variant="h1">
+      {user ? (
+        <p>Welcome, {user.displayName}</p>
+      ) : (
+        <p>Please log in</p>
+      )}
+    </Typography>
   );
 }
 
