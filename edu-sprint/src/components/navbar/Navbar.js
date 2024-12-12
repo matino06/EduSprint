@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { AppBar, Toolbar, Button, Box, Container } from '@mui/material';
 import { Google } from '@mui/icons-material';
 
-import { useUser } from '../context/UserContext';
-import { auth, googleProvider } from '../config/firebase-config';
+import { useUser } from '../../context/UserContext';
+import { auth, googleProvider } from '../../config/firebase-config';
 import { signInWithPopup, signOut } from 'firebase/auth';
 
 const Navbar = () => {
     const user = useUser();
+    console.log(user);
 
     // Function to handle Google login
     const handleGoogleLogin = async () => {
