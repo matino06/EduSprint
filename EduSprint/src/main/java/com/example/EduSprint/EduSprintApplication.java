@@ -15,11 +15,11 @@ public class EduSprintApplication {
 		SpringApplication.run(EduSprintApplication.class, args);
 	}
 
-	@Bean
-	CommandLineRunner runner(LearningObjectiveRepository repository) {
-		return args -> {
-
-			System.out.println(repository.findById(Long.valueOf(3)));
-		};
-	}
+//	@Bean
+//	CommandLineRunner runner(LearningObjectiveRepository repository) {
+//		return args -> {
+//
+//			System.out.println(repository.findById(Long.valueOf(3)));
+//		};
+//	}
 }
