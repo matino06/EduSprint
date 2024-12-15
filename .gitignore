@@ -1,2 +1,6 @@
 # Ignore .DS_Store file
 .DS_Store
+
+.idea/
+
+Backend/
