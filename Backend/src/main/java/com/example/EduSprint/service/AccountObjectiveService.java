@@ -4,21 +4,27 @@ import com.example.EduSprint.entity.Account;
 import com.example.EduSprint.entity.AccountObjective;
 import com.example.EduSprint.entity.LearningObjective;
 import com.example.EduSprint.repository.AccountObjectiveRepository;
+import com.example.EduSprint.repository.AccountRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.Instant;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AccountObjectiveService {
 
     public final AccountObjectiveRepository accountObjectiveRepository;
+    public final AccountRepository accountRepository;
     public final LearningObjectiveService learningObjectiveService;
 
-    public AccountObjectiveService(AccountObjectiveRepository accountObjectiveRepository, LearningObjectiveService learningObjectiveService) {
+    public AccountObjectiveService(AccountObjectiveRepository accountObjectiveRepository, AccountRepository accountRepository, LearningObjectiveService learningObjectiveService) {
         this.accountObjectiveRepository = accountObjectiveRepository;
+        this.accountRepository = accountRepository;
         this.learningObjectiveService = learningObjectiveService;
     }
 
@@ -42,5 +48,15 @@ public class AccountObjectiveService {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public LearningObjective getNextLearningObjective(Account account) {
+        List<AccountObjective> objectives = accountObjectiveRepository.findAllByAccount(account);
+        List<AccountObjective> pendingAccountObjectives = objectives.stream()
+                .filter(ao -> ao.getLastSolvedDate().plus(Duration.ofDays(ao.getI())).isBefore(Instant.now()))
+                .sorted(Comparator.comparing(AccountObjective::getEf))
+                .collect(Collectors.toList());
+
+        return pendingAccountObjectives.get(0).getObjective();
     }
 }

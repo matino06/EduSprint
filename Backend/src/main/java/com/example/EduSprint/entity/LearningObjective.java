@@ -43,6 +43,6 @@ public class LearningObjective {
 
     @Override
     public String toString() {
-        return subfield.toString() + "LearningObjective=" + objectiveName;
+        return subfield.toString() + " LearningObjective=" + objectiveName;
     }
 }

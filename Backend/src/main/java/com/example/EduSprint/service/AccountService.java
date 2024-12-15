@@ -31,4 +31,8 @@ public class AccountService {
             return false;
         }
     }
+
+    public Account getAccount(String email) {
+        return accountRepository.findAccountByEmail(email).get();
+    }
 }

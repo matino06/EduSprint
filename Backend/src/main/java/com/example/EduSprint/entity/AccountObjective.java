@@ -96,14 +96,6 @@ public class AccountObjective {
 
     @Override
     public String toString() {
-        return "AccountObjective{" +
-                "id=" + id +
-                ", account=" + account +
-                ", objective=" + objective +
-                ", EF=" + EF +
-                ", I=" + I +
-                ", n=" + n +
-                ", lastSolvedDate=" + lastSolvedDate +
-                '}';
+        return "AccountObjective{" + "id=" + id + "}";
     }
 }

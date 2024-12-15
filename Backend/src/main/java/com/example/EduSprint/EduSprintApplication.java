@@ -1,5 +1,6 @@
 package com.example.EduSprint;
 
+import com.example.EduSprint.service.AccountObjectiveService;
 import org.springframework.boot.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,10 +17,10 @@ public class EduSprintApplication {
 	}
 
 //	@Bean
-//	CommandLineRunner runner(LearningObjectiveRepository repository) {
+//	CommandLineRunner runner(AccountObjectiveService service) {
 //		return args -> {
 //
-//			System.out.println(repository.findById(Long.valueOf(3)));
+//			System.out.println(service.getNextLearningObjective(Long.valueOf(15)));
 //		};
 //	}
 }
