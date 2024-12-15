@@ -19,9 +19,4 @@ public class TaskController {
         this.taskRepository = taskRepository;
         this.accountService = accountService;
     }
-
-    @GetMapping("/{email}")
-    Long getTask(@PathVariable String email) {
-        return accountService.getAccountIdByEmail(email);
-    }
 }

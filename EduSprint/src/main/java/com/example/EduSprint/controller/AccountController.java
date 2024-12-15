@@ -1,7 +1,10 @@
 package com.example.EduSprint.controller;
 
 import com.example.EduSprint.repository.AccountRepository;
+import com.example.EduSprint.service.AccountObjectiveService;
 import com.example.EduSprint.service.AccountService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -9,23 +12,27 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
 
     public final AccountRepository accountRepository;
+    public final AccountObjectiveService accountObjectiveService;
     public final AccountService accountService;
 
-    public AccountController(AccountRepository accountRepository, AccountService accountService) {
+    public AccountController(AccountRepository accountRepository, AccountService accountService, AccountObjectiveService accountObjectiveService) {
         this.accountRepository = accountRepository;
         this.accountService = accountService;
+        this.accountObjectiveService = accountObjectiveService;
     }
 
-    @GetMapping("/check-account")
-    public boolean checkAccount(@RequestParam String email, @RequestParam String name) {
+    @PostMapping("/check-account")
+    public ResponseEntity<String> checkAccount(@RequestParam String email, @RequestParam String name) {
         if (accountRepository.existsByEmail(email)) {
-            return true;
+            return new ResponseEntity<>("Account exists", HttpStatus.OK);
         }
 
-        if (accountService.createAccount(email, name)) {
-            return true;
+        boolean accountCreated = accountService.createAccount(email, name);
+
+        if (accountCreated) {
+            return new ResponseEntity<>("Account created", HttpStatus.CREATED);
         } else {
-            return false;
+            return new ResponseEntity<>("Account creation failed", HttpStatus.BAD_REQUEST);
         }
     }
 }
